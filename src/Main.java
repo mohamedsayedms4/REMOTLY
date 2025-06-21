@@ -1,4 +1,5 @@
 import model.Student;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -16,9 +17,13 @@ public class Main {
                 "Ahmed", "Sayed", "ahmedsayed123",
                 "ahmed@gmail.com", "1223456", "01007809006",
                 "male", dateOfBirth
-
         ).setAddress("Some address").build();
 
+        // مثال للوصول إلى بيانات الطالب:
+        System.out.println("Name: " + student.getFullName());
+        System.out.println("Email: " + student.getEmail());
+
+        // طباعة الكائن بالكامل
         System.out.println(student);
     }
 }
