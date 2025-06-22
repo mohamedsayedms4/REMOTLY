@@ -6,8 +6,9 @@ import java.util.Objects;
 
 public abstract class UserBaseEntity {
 
-    // ==== Common Protected Fields ====
     protected int id;
+    protected String firstName;
+    protected String lastName;
     protected String fullName;
     protected int age;
     protected String userName;
@@ -24,10 +25,14 @@ public abstract class UserBaseEntity {
     protected String gender;
     protected Role role;
 
-    // ==== Constructor used by subclasses ====
+
+
     protected UserBaseEntity(BaseBuilder<?> builder) {
         this.id = builder.id;
-        this.fullName = builder.firstName + " " + builder.lastName;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.fullName = ((builder.firstName != null ? builder.firstName : "") +
+                (builder.lastName != null ? " " + builder.lastName : "")).trim();
         this.age = builder.age;
         this.userName = builder.userName;
         this.password = builder.password;
@@ -44,7 +49,6 @@ public abstract class UserBaseEntity {
         this.role = builder.role;
     }
 
-    // ==== Generic Reusable Builder ====
     public static abstract class BaseBuilder<T extends BaseBuilder<T>> {
         protected int id;
         protected String firstName;
@@ -66,6 +70,22 @@ public abstract class UserBaseEntity {
 
         protected abstract T self();
 
+        public BaseBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.userName = userName;
+            this.password = password;
+            this.email = email;
+            this.gender = gender;
+        }
+
+        public BaseBuilder(String userName, String password) {
+            this.userName = userName;
+            this.password = password;
+        }
+        public BaseBuilder() {
+        }
+
         public T setId(int id) { this.id = id; return self(); }
         public T setFirstName(String firstName) { this.firstName = firstName; return self(); }
         public T setLastName(String lastName) { this.lastName = lastName; return self(); }
@@ -85,8 +105,9 @@ public abstract class UserBaseEntity {
         public T setRole(Role role) { this.role = role; return self(); }
     }
 
-    // ==== Getters only ====
     public int getId() { return id; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
     public String getFullName() { return fullName; }
     public int getAge() { return age; }
     public String getUserName() { return userName; }
@@ -103,6 +124,77 @@ public abstract class UserBaseEntity {
     public String getGender() { return gender; }
     public Role getRole() { return role; }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFullNumber(String fullNumber) {
+        this.fullNumber = fullNumber;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserBaseEntity setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this ;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setFirstLogin(LocalDateTime firstLogin) {
+        this.firstLogin = firstLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
+

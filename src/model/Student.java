@@ -1,46 +1,54 @@
 package model;
+
 import java.time.LocalDate;
 
-public class Student extends UserBaseEntity {
+public  class Student extends UserBaseEntity{
 
-    private int score;
+    private int score ;
 
     private Student(StudentBuilder builder) {
         super(builder);
-        this.score = builder.score;
+        this.score = builder.score ;
     }
 
-    public static class StudentBuilder extends BaseBuilder<StudentBuilder> {
-        private int score;
 
-        public StudentBuilder setScore(int score) {
-            this.score = score;
-            return this;
-        }
+    public static class StudentBuilder extends BaseBuilder<StudentBuilder>{
+       private int score ;
 
-        @Override
-        protected StudentBuilder self() {
-            return this;
-        }
+       public StudentBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
+           super(firstName, lastName, userName, password, email, gender);
+       }
 
-        public Student build() {
-            return new Student(this);
-        }
+       public StudentBuilder(String userName, String password) {
+           super(userName,password);
+       }
 
-        // ← هذه داخل StudentBuilder
-        public static StudentBuilder signUpBuilder(String firstName, String lastName, String userName,
-                                                   String email, String password, String fullNumber,
-                                                   String gender, LocalDate dateOfBirth) {
-            return new StudentBuilder()
-                    .setFirstName(firstName)
-                    .setLastName(lastName)
-                    .setUserName(userName)
-                    .setEmail(email)
-                    .setPassword(password)
-                    .setFullNumber(fullNumber)
-                    .setGender(gender)
-                    .setDateOfBirth(dateOfBirth);
-        }
+       public int getScore() {
+           return score;
+       }
+
+       public StudentBuilder setScore(int score) {
+           this.score = score;
+           return this;
+       }
+
+       @Override
+       protected StudentBuilder self() {
+           return this;
+       }
+
+
+       public Student build() {
+           return new Student(this);
+       }
+   }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override
@@ -48,6 +56,8 @@ public class Student extends UserBaseEntity {
         return "Student{" +
                 "score=" + score +
                 ", id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", age=" + age +
                 ", userName='" + userName + '\'' +
@@ -65,12 +75,6 @@ public class Student extends UserBaseEntity {
                 ", role=" + role +
                 '}';
     }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
 }
+
+

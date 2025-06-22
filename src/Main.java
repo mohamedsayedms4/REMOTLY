@@ -1,29 +1,21 @@
 import model.Student;
+import model.Teacher;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        // تسجيل جديد
 
-        LocalDate dateOfBirth = LocalDate.of(2000, 5, 10);  // 10 مايو 2000
+        Student s = new Student.StudentBuilder("miiiss","mkmkm")
+                .setScore(15)
+                .build();
 
-        Student student = Student.StudentBuilder.signUpBuilder(
-                "Ahmed", "Sayed", "ahmedsayed123",
-                "ahmed@gmail.com", "1223456", "01007809006",
-                "male", dateOfBirth
-        ).build();
+        Teacher t = new Teacher.TeacherBuilder("Ahmed","12300")
+                .setSubjectName("Math")
+                .build();
 
-        Student student1 = Student.StudentBuilder.signUpBuilder(
-                "Ahmed", "Sayed", "ahmedsayed123",
-                "ahmed@gmail.com", "1223456", "01007809006",
-                "male", dateOfBirth
-        ).setAddress("Some address").build();
-
-        // مثال للوصول إلى بيانات الطالب:
-        System.out.println("Name: " + student.getFullName());
-        System.out.println("Email: " + student.getEmail());
-
-        // طباعة الكائن بالكامل
-        System.out.println(student);
+        System.out.println(s);
+        System.out.println(t);
     }
 }
