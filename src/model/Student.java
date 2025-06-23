@@ -18,6 +18,8 @@ public class Student extends UserBaseEntity {
 
     private Map<Subject, Integer> subjects = new HashMap<>();
 
+    private Map<SubjectSchool, Integer> enrolledSubjects = new HashMap<>();
+
     /**
      * Private constructor to enforce the use of the builder pattern.
      *
@@ -147,66 +149,12 @@ public class Student extends UserBaseEntity {
         return subjects;
     }
 
-    /**
-     * Updates the grade for a given subject if the student is enrolled in it.
-     *
-     * @param subject the subject to update
-     * @param grade   the new grade
-     */
-    public void setSubjectGrade(Subject subject, int grade) {
-        if (subjects.containsKey(subject)) {
-            subjects.put(subject, grade);
-        } else {
-            System.out.println("هذا الطالب لا يدرس المادة: " + subject.getArabicName());
-        }
-    }
 
-    /**
-     * Prints all enrolled subjects and their current grades.
-     */
-    public void printSubjects() {
-        System.out.println("المواد الدراسية للطالب في " + academicYear.getDisplayName() + ":");
-        subjects.forEach((subject, grade) ->
-                System.out.println("- " + subject.getArabicName() + " (الدرجة: " + grade + ")"));
-    }
 
-    /**
-     * Enrolls the student in a subject if it is available in their academic year and not already enrolled.
-     *
-     * @param subject the subject to enroll in
-     */
-    public void enrollInSubject(Subject subject) {
-        if (subjects.containsKey(subject)) {
-            System.out.println("أنت بالفعل مشترك في المادة: " + subject.getArabicName());
-        } else if (!subject.isAvailableIn(academicYear)) {
-            System.out.println("المادة " + subject.getArabicName() + " غير متاحة لسنتك الدراسية.");
-        } else {
-            subjects.put(subject, 0); // Default initial grade
-            System.out.println("تم الاشتراك في المادة: " + subject.getArabicName());
-        }
-    }
 
-    /**
-     * Enrolls the student in a list of subjects.
-     *
-     * @param subjectList list of subjects to enroll in
-     */
-    public void enrollInSubjects(List<Subject> subjectList) {
-        for (Subject subject : subjectList) {
-            enrollInSubject(subject);
-        }
-    }
 
-    /**
-     * Returns a list of subjects available for enrollment
-     * based on the student's academic year and current enrollments.
-     */
-    public List<Subject> getAvailableSubjectsToEnroll() {
-        return Subject.getSubjectsByAcademicYear(academicYear)
-                .stream()
-                .filter(subject -> !subjects.containsKey(subject))
-                .collect(Collectors.toList());
-    }
+
+
 
     /**
      * Overrides the toString method to return a string representation of the student.
@@ -223,5 +171,21 @@ public class Student extends UserBaseEntity {
                 .map(Subject::getArabicName)
                 .collect(Collectors.joining(", ")) +
                 '}';
+    }
+
+    public void setAcademicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    public void setSubjects(Map<Subject, Integer> subjects) {
+        this.subjects = subjects;
+    }
+
+    public Map<SubjectSchool, Integer> getEnrolledSubjects() {
+        return enrolledSubjects;
+    }
+
+    public void setEnrolledSubjects(Map<SubjectSchool, Integer> enrolledSubjects) {
+        this.enrolledSubjects = enrolledSubjects;
     }
 }
