@@ -1,21 +1,17 @@
-import model.Student;
-import model.Teacher;
-
-import java.time.LocalDate;
+import model.*;
 
 public class Main {
     public static void main(String[] args) {
-        // تسجيل جديد
 
-        Student s = new Student.StudentBuilder("miiiss","mkmkm")
-                .setScore(15)
+        Student student = new Student.StudentBuilder(
+                "Omar", "Ali", "omar_99", "pass", "omar@example.com", "male"
+        ).setAcademicYear(AcademicYear.GRADE_1_SECONDARY)
                 .build();
 
-        Teacher t = new Teacher.TeacherBuilder("Ahmed","12300")
-                .setSubjectName("Math")
-                .build();
+        System.out.println(student.getAvailableSubjectsToEnroll());
+        student.enrollInSubject(Subject.ARABIC);
+        student.printSubjects();
 
-        System.out.println(s);
-        System.out.println(t);
+
     }
 }

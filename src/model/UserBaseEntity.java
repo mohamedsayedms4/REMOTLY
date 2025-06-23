@@ -2,31 +2,80 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
+/**
+ * Abstract base class representing common attributes of any user in the system.
+ * Includes shared fields like name, username, password, contact info, and login metadata.
+ *
+ * Author: Mohamed Sayed
+ * Date: 22-6-2025
+ * Version: 1.0
+ */
 public abstract class UserBaseEntity {
 
+    // ========== Fields ==========
+
+    /** Unique identifier for the user */
     protected int id;
+
+    /** First name of the user */
     protected String firstName;
+
+    /** Last name of the user */
     protected String lastName;
+
+    /** Full name (auto-generated from first and last names) */
     protected String fullName;
+
+    /** Age of the user */
     protected int age;
+
+    /** Username for authentication */
     protected String userName;
+
+    /** Password for authentication */
     protected String password;
+
+    /** Full phone number (including country code if needed) */
     protected String fullNumber;
+
+    /** City of residence */
     protected String city;
+
+    /** Full address */
     protected String address;
+
+    /** URL or path to the profile image */
     protected String imageUrl;
+
+    /** Flag indicating whether the user account is active */
     protected boolean isActive;
+
+    /** Date of birth */
     protected LocalDate dateOfBirth;
+
+    /** Timestamp of first login */
     protected LocalDateTime firstLogin;
+
+    /** Timestamp of last login */
     protected LocalDateTime lastLogin;
+
+    /** Email address */
     protected String email;
+
+    /** Gender (e.g., "Male", "Female") */
     protected String gender;
+
+    /** User role (e.g., STUDENT, TEACHER) */
     protected Role role;
 
+    // ========== Constructor ==========
 
-
+    /**
+     * Initializes the UserBaseEntity using the values provided by the builder.
+     *
+     * @param builder The builder instance carrying user values
+     */
     protected UserBaseEntity(BaseBuilder<?> builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
@@ -49,7 +98,15 @@ public abstract class UserBaseEntity {
         this.role = builder.role;
     }
 
+    // ========== Builder Class ==========
+
+    /**
+     * Abstract generic builder class for constructing UserBaseEntity or its subclasses.
+     *
+     * @param <T> Type of builder subclass
+     */
     public static abstract class BaseBuilder<T extends BaseBuilder<T>> {
+
         protected int id;
         protected String firstName;
         protected String lastName;
@@ -68,8 +125,16 @@ public abstract class UserBaseEntity {
         protected String gender;
         protected Role role;
 
+        /**
+         * Abstract method to return the builder itself (for chaining).
+         *
+         * @return builder instance
+         */
         protected abstract T self();
 
+        /**
+         * Constructor for full sign-up use case.
+         */
         public BaseBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -79,12 +144,18 @@ public abstract class UserBaseEntity {
             this.gender = gender;
         }
 
+        /**
+         * Constructor for login use case only.
+         */
         public BaseBuilder(String userName, String password) {
             this.userName = userName;
             this.password = password;
         }
-        public BaseBuilder() {
-        }
+
+        /** Default constructor */
+        public BaseBuilder() {}
+
+        // ========== Builder Setters ==========
 
         public T setId(int id) { this.id = id; return self(); }
         public T setFirstName(String firstName) { this.firstName = firstName; return self(); }
@@ -105,6 +176,8 @@ public abstract class UserBaseEntity {
         public T setRole(Role role) { this.role = role; return self(); }
     }
 
+    // ========== Getters ==========
+
     public int getId() { return id; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
@@ -124,77 +197,53 @@ public abstract class UserBaseEntity {
     public String getGender() { return gender; }
     public Role getRole() { return role; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // ========== Setters ==========
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setId(int id) { this.id = id; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setAge(int age) { this.age = age; }
+    public void setUserName(String userName) { this.userName = userName; }
+    public void setPassword(String password) { this.password = password; }
+    public void setFullNumber(String fullNumber) { this.fullNumber = fullNumber; }
+    public void setCity(String city) { this.city = city; }
+    public void setAddress(String address) { this.address = address; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setActive(boolean active) { this.isActive = active; }
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+    public void setFirstLogin(LocalDateTime firstLogin) { this.firstLogin = firstLogin; }
+    public void setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; }
+    public void setEmail(String email) { this.email = email; }
+    public void setGender(String gender) { this.gender = gender; }
+    public void setRole(Role role) { this.role = role; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    // ========== toString ==========
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setFullNumber(String fullNumber) {
-        this.fullNumber = fullNumber;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public UserBaseEntity setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-        return this ;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setFirstLogin(LocalDateTime firstLogin) {
-        this.firstLogin = firstLogin;
-    }
-
-    public void setLastLogin(LocalDateTime lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    /**
+     * Returns a string representation of the user entity with all fields.
+     *
+     * @return string containing user info
+     */
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", age=" + age +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", fullNumber='" + fullNumber + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", isActive=" + isActive +
+                ", dateOfBirth=" + dateOfBirth +
+                ", firstLogin=" + firstLogin +
+                ", lastLogin=" + lastLogin +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", role=" + role;
     }
 }
-

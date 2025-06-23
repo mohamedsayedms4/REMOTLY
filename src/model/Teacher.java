@@ -1,87 +1,160 @@
 package model;
 
-public class Teacher extends UserBaseEntity{
-    private int school ;
-    private String subjectName ;
+/**
+ * Teacher class represents a teacher entity that inherits from {@link UserBaseEntity}.
+ * It includes additional information specific to teachers, such as the associated school and the subject taught.
+ *
+ * Author: Mohamed Sayed
+ * Date: 22-6-2025
+ * Version: 1.0
+ */
+public class Teacher extends UserBaseEntity {
 
+    /**
+     * Represents the school ID the teacher is associated with.
+     */
+    private int school;
+
+    /**
+     * Represents the name of the subject taught by the teacher.
+     */
+    private String subjectName;
+
+    /**
+     * Private constructor to enforce object creation via the builder.
+     *
+     * @param builder the builder containing teacher data
+     */
     private Teacher(TeacherBuilder builder) {
         super(builder);
         this.school = builder.school;
         this.subjectName = builder.subjectName;
     }
 
-    public static class TeacherBuilder extends BaseBuilder<TeacherBuilder>{
-        private int school ;
-        private String subjectName ;
+    /**
+     * Builder class for constructing {@link Teacher} objects.
+     * Inherits from {@link BaseBuilder}.
+     */
+    public static class TeacherBuilder extends BaseBuilder<TeacherBuilder> {
+        private int school;
+        private String subjectName;
 
-
+        /**
+         * Full data constructor (used for sign-up or profile creation).
+         *
+         * @param firstName  teacher's first name
+         * @param lastName   teacher's last name
+         * @param userName   username for login
+         * @param password   password for login
+         * @param email      teacher's email
+         * @param gender     gender of the teacher
+         */
         public TeacherBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
             super(firstName, lastName, userName, password, email, gender);
         }
 
+        /**
+         * Constructor for login/sign-in only.
+         *
+         * @param userName  username
+         * @param password  password
+         */
         public TeacherBuilder(String userName, String password) {
-            super(userName,password);
+            super(userName, password);
         }
 
+        /**
+         * Sets the school ID the teacher is associated with.
+         *
+         * @param school school ID
+         * @return the builder instance
+         */
         public TeacherBuilder setSchool(int school) {
             this.school = school;
             return this;
         }
 
+        /**
+         * Sets the subject name the teacher teaches.
+         *
+         * @param subjectName subject name
+         * @return the builder instance
+         */
         public TeacherBuilder setSubjectName(String subjectName) {
             this.subjectName = subjectName;
             return this;
         }
 
+        /**
+         * Returns the current builder instance.
+         *
+         * @return this builder
+         */
         @Override
         protected TeacherBuilder self() {
             return this;
         }
 
+        /**
+         * Builds and returns a new {@link Teacher} object.
+         *
+         * @return constructed Teacher instance
+         */
         public Teacher build() {
             return new Teacher(this);
         }
     }
 
+    // ========== Getters & Setters ==========
+
+    /**
+     * Gets the school ID.
+     *
+     * @return school ID
+     */
     public int getSchool() {
         return school;
     }
 
+    /**
+     * Sets the school ID.
+     *
+     * @param school school ID
+     */
     public void setSchool(int school) {
         this.school = school;
     }
 
+    /**
+     * Gets the subject name.
+     *
+     * @return subject name
+     */
     public String getSubjectName() {
         return subjectName;
     }
 
+    /**
+     * Sets the subject name.
+     *
+     * @param subjectName subject name
+     */
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
 
+    // ========== toString() ==========
+
+    /**
+     * Returns a string representation of the Teacher object.
+     *
+     * @return string description
+     */
     @Override
     public String toString() {
-        return "Teacher{" +
+        return super.toString() +
                 "school=" + school +
                 ", subjectName='" + subjectName + '\'' +
-                ", id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", age=" + age +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", fullNumber='" + fullNumber + '\'' +
-                ", city='" + city + '\'' +
-                ", address='" + address + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", isActive=" + isActive +
-                ", dateOfBirth=" + dateOfBirth +
-                ", firstLogin=" + firstLogin +
-                ", lastLogin=" + lastLogin +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", role=" + role +
                 '}';
     }
 }
