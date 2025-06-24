@@ -1,17 +1,15 @@
 package service;
 
-import model.Subject;
-import model.SubjectSchool;
-
-import java.util.List;
+import model.Course;
 
 public interface StudentService {
 
-    void printEnrolledSubjectSchools();
-    void enrollInSubjectSchool(SubjectSchool subjectSchool);
-    List<Subject> getAvailableSubjectsToEnroll();
-    void enrollInSubjects(List<Subject> subjectList);
-    void enrollInSubject(Subject subject);
-    void printSubjects();
-    void setSubjectGrade(Subject subject, int grade);
+
+    void showAvailableSubjects();
+    int  subscribeToCourse(Course course);
+    void showSubscribedCourses();
+    int  unsubscribeFromCourse(Course course);
+    void showCourseDetails(Course course);
+
+
 }

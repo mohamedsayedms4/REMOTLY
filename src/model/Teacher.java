@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Teacher class represents a teacher entity that inherits from {@link UserBaseEntity}.
  * It includes additional information specific to teachers, such as the associated school and the subject taught.
@@ -19,6 +22,8 @@ public class Teacher extends UserBaseEntity {
      * Represents the name of the subject taught by the teacher.
      */
     private String subjectName;
+
+    private List<Course> courses = new ArrayList<>();
 
     /**
      * Private constructor to enforce object creation via the builder.
@@ -49,7 +54,7 @@ public class Teacher extends UserBaseEntity {
          * @param email      teacher's email
          * @param gender     gender of the teacher
          */
-        public TeacherBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
+        public TeacherBuilder(String firstName, String lastName, String userName, String password, String email, Gender gender) {
             super(firstName, lastName, userName, password, email, gender);
         }
 
@@ -132,6 +137,14 @@ public class Teacher extends UserBaseEntity {
      */
     public String getSubjectName() {
         return subjectName;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     /**

@@ -1,116 +1,131 @@
-package model;
-
+import service.TeacherService;
 import service.implementation.StudentServiceImpl;
-
-import java.util.List;
-import java.util.Scanner;
+import model.*;
+import service.implementation.TeacherServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please select user type:");
-        System.out.println("1 - Student");
-        System.out.println("2 - Teacher");
+        Remotly remotly = Remotly.getInstance();
+        // ====== Create Additional Teachers ======
+        Teacher[] teachers = {
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Ahmed", "Salem", "ahmed.s", "t123", "ahmed.s@email.com", Gender.MALE)
+                                .setSchool(101).setSubjectName("Physics"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Hossam", "Ibrahim", "hossam.i", "t234", "hossam.i@email.com", Gender.MALE)
+                                .setSchool(102).setSubjectName("Chemistry"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Nada", "Tarek", "nada.t", "t345", "nada.t@email.com", Gender.FEMALE)
+                                .setSchool(103).setSubjectName("Biology"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Mahmoud", "Zaki", "mahmoud.z", "t456", "mahmoud.z@email.com", Gender.MALE)
+                                .setSchool(104).setSubjectName("English"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Reem", "Fathy", "reem.f", "t567", "reem.f@email.com", Gender.FEMALE)
+                                .setSchool(105).setSubjectName("French"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Khaled", "Adel", "khaled.a", "t678", "khaled.a@email.com", Gender.MALE)
+                                .setSchool(106).setSubjectName("Computer Science"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Fatma", "Hassan", "fatma.h", "t789", "fatma.h@email.com", Gender.FEMALE)
+                                .setSchool(107).setSubjectName("History"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Yasmine", "Fouad", "yasmine.f", "t890", "yasmine.f@email.com", Gender.FEMALE)
+                                .setSchool(108).setSubjectName("Geography"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Omar", "Hatem", "omar.h", "t901", "omar.h@email.com", Gender.MALE)
+                                .setSchool(109).setSubjectName("Philosophy"),
+                        Role.TEACHER),
+                (Teacher) UserEntityFactory.createUser(
+                        new Teacher.TeacherBuilder("Laila", "Samir", "laila.s", "t012", "laila.s@email.com", Gender.FEMALE)
+                                .setSchool(110).setSubjectName("Art"),
+                        Role.TEACHER)
+        };
 
-        int type = scanner.nextInt();
+// ====== Create 5 Courses ======
+        Course physicsCourse = new Course(
+                "Physics - Grade 7", 303, 12, 48,
+                teachers[0].getFullName(), AcademicYear.GRADE_1_PREPARATORY
+        );
 
-        if (type == 1) {
-            // ====== Choose Stage ======
-            System.out.println("Select your stage:");
-            System.out.println("1 - Primary");
-            System.out.println("2 - Preparatory");
-            System.out.println("3 - Secondary");
+        Course chemistryCourse = new Course(
+                "Chemistry - Grade 7", 304, 10, 40,
+                teachers[1].getFullName(), AcademicYear.GRADE_1_PREPARATORY
+        );
 
-            Stage stage = null;
-            AcademicYear academicYear = null;
+        Course historyCourse = new Course(
+                "History - Grade 7", 305, 8, 32,
+                teachers[1].getFullName(), AcademicYear.GRADE_1_PREPARATORY
+        );
 
-            int stageChoice = scanner.nextInt();
-            switch (stageChoice) {
-                case 1 -> stage = Stage.PRIMARY;
-                case 2 -> stage = Stage.PREPARATORY;
-                case 3 -> stage = Stage.SECONDARY;
-                default -> {
-                    System.out.println("Invalid stage");
-                    return;
-                }
-            }
+        Course computerCourse = new Course(
+                "Computer Science - Grade 7", 306, 10, 40,
+                teachers[1].getFullName(), AcademicYear.GRADE_1_PREPARATORY
+        );
 
-            // ====== Choose Academic Year in selected stage ======
-            AcademicYear[] years = AcademicYear.values();
-            System.out.println("Choose your academic year:");
-            for (int i = 0; i < years.length; i++) {
-                if (years[i].getStage() == stage) {
-                    System.out.println((i + 1) + " - " + years[i].getDisplayName());
-                }
-            }
+        Course englishCourse = new Course(
+                "English - Grade 7", 307, 9, 36,
+                teachers[1].getFullName(), AcademicYear.GRADE_1_PREPARATORY
+        );
 
-            int yearIndex = scanner.nextInt() - 1;
-            if (yearIndex < 0 || yearIndex >= years.length || years[yearIndex].getStage() != stage) {
-                System.out.println("Invalid academic year selection.");
-                return;
-            }
-            academicYear = years[yearIndex];
+// ====== Assign courses to their teachers ======
+        TeacherService service0 = new TeacherServiceImpl(teachers[0]);
+        TeacherService service1 = new TeacherServiceImpl(teachers[1]);
+        TeacherService service2 = new TeacherServiceImpl(teachers[2]);
+        TeacherService service3 = new TeacherServiceImpl(teachers[1]);
+        TeacherService service4 = new TeacherServiceImpl(teachers[1]);
 
-            // ====== Collect Student Info ======
-            System.out.print("First Name: ");
-            String firstName = scanner.next();
+        service0.addCourse(physicsCourse);
+        service1.addCourse(chemistryCourse);
+        service2.addCourse(historyCourse);
+        service3.addCourse(computerCourse);
+        service4.addCourse(englishCourse);
 
-            System.out.print("Last Name: ");
-            String lastName = scanner.next();
 
-            System.out.print("Username: ");
-            String userName = scanner.next();
-
-            System.out.print("Email: ");
-            String email = scanner.next();
-
-            System.out.print("Password: ");
-            String password = scanner.next();
-
-            System.out.print("Gender: ");
-            String gender = scanner.next();
-
-            // ====== Create Student ======
-            Student.StudentBuilder studentBuilder = new Student.StudentBuilder(
-                    firstName, lastName, userName, password, email, gender
-            );
-
-            Student student = (Student) UserEntityFactory.createUser(
-                    studentBuilder, Role.STUDENT, academicYear
-            );
-
-            System.out.println("\n✅ Student created successfully!");
-            System.out.println("Full Name: " + student.getFullName());
-            System.out.println("Academic Year: " + academicYear.getDisplayName());
-
-            // ====== Show available subjects ======
-            StudentServiceImpl studentService = new StudentServiceImpl(student);
-            List<Subject> availableSubjects = studentService.getAvailableSubjectsToEnroll();
-
-            if (availableSubjects.isEmpty()) {
-                System.out.println("❗ No available subjects to enroll in.");
-            } else {
-                System.out.println("\nAvailable subjects to enroll:");
-                for (int i = 0; i < availableSubjects.size(); i++) {
-                    System.out.println((i + 1) + " - " + availableSubjects.get(i).getArabicName());
-                }
-
-                // ====== Optional: Ask user to enroll in a subject ======
-                System.out.print("\nEnter subject number to enroll (or 0 to skip): ");
-                int subjectChoice = scanner.nextInt();
-                if (subjectChoice > 0 && subjectChoice <= availableSubjects.size()) {
-                    Subject selectedSubject = availableSubjects.get(subjectChoice - 1);
-                    studentService.enrollInSubject(selectedSubject);
-                } else {
-                    System.out.println("No enrollment performed.");
-                }
-            }
-
-        } else if (type == 2) {
-            System.out.println("🔧 Teacher creation not implemented yet.");
-        } else {
-            System.out.println("❌ Invalid selection.");
+// Add them to Remotly
+        for (Teacher t : teachers) {
+            remotly.addTeacher(t);
         }
+
+// ====== Create Additional Students ======
+        Student[] students = {
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Karim", "Yasser", "karim.y", "s111", "karim.y@email.com", Gender.MALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY),
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Aya", "Nabil", "aya.n", "s222", "aya.n@email.com", Gender.FEMALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY),
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Mostafa", "Ahmed", "mostafa.a", "s333", "mostafa.a@email.com", Gender.MALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY),
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Nour", "Ashraf", "nour.a", "s444", "nour.a@email.com", Gender.FEMALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY),
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Hana", "Fathy", "hana.f", "s555", "hana.f@email.com", Gender.FEMALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY),
+                (Student) UserEntityFactory.createUser(
+                        new Student.StudentBuilder("Adham", "Kamel", "adham.k", "s666", "adham.k@email.com", Gender.MALE),
+                        Role.STUDENT, AcademicYear.GRADE_1_PREPARATORY)
+        };
+
+// Add them to Remotly
+        for (Student s : students) {
+            remotly.addStudent(s);
+        }
+
+        remotly.printStudents();
+        remotly.printTeachers();
+
+        System.out.println(remotly.getTeachers().get(1).getCourses().get(0).getLessons());
     }
 }

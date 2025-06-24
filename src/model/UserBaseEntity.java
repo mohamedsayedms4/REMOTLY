@@ -64,7 +64,7 @@ public abstract class UserBaseEntity {
     protected String email;
 
     /** Gender (e.g., "Male", "Female") */
-    protected String gender;
+    protected Gender gender;
 
     /** User role (e.g., STUDENT, TEACHER) */
     protected Role role;
@@ -122,7 +122,7 @@ public abstract class UserBaseEntity {
         protected LocalDateTime firstLogin;
         protected LocalDateTime lastLogin;
         protected String email;
-        protected String gender;
+        protected Gender gender;
         protected Role role;
 
         /**
@@ -135,7 +135,7 @@ public abstract class UserBaseEntity {
         /**
          * Constructor for full sign-up use case.
          */
-        public BaseBuilder(String firstName, String lastName, String userName, String password, String email, String gender) {
+        public BaseBuilder(String firstName, String lastName, String userName, String password, String email, Gender gender) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.userName = userName;
@@ -172,7 +172,7 @@ public abstract class UserBaseEntity {
         public T setFirstLogin(LocalDateTime firstLogin) { this.firstLogin = firstLogin; return self(); }
         public T setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; return self(); }
         public T setEmail(String email) { this.email = email; return self(); }
-        public T setGender(String gender) { this.gender = gender; return self(); }
+        public T setGender(Gender gender) { this.gender = gender; return self(); }
         public T setRole(Role role) { this.role = role; return self(); }
     }
 
@@ -194,7 +194,7 @@ public abstract class UserBaseEntity {
     public LocalDateTime getFirstLogin() { return firstLogin; }
     public LocalDateTime getLastLogin() { return lastLogin; }
     public String getEmail() { return email; }
-    public String getGender() { return gender; }
+    public String getGender() { return gender.toString(); }
     public Role getRole() { return role; }
 
     // ========== Setters ==========
@@ -215,7 +215,7 @@ public abstract class UserBaseEntity {
     public void setFirstLogin(LocalDateTime firstLogin) { this.firstLogin = firstLogin; }
     public void setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; }
     public void setEmail(String email) { this.email = email; }
-    public void setGender(String gender) { this.gender = gender; }
+    public void setGender(Gender gender) { this.gender = gender; }
     public void setRole(Role role) { this.role = role; }
 
     // ========== toString ==========

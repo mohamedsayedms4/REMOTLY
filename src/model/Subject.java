@@ -117,6 +117,16 @@ public enum Subject {
     }
 
     /**
+     * Returns the English name (enum name) of the subject.
+     *
+     * @return the English name (e.g., "ARABIC", "ENGLISH", etc.)
+     */
+    public String getEnglishName() {
+        return name();
+    }
+
+
+    /**
      * Gets the set of academic years in which this subject is available.
      *
      * @return Set of academic years

@@ -18,7 +18,7 @@ public class Student extends UserBaseEntity {
 
     private Map<Subject, Integer> subjects = new HashMap<>();
 
-    private Map<SubjectSchool, Integer> enrolledSubjects = new HashMap<>();
+    private Map<Course, Integer> Courses = new HashMap<>();
 
     /**
      * Private constructor to enforce the use of the builder pattern.
@@ -51,7 +51,7 @@ public class Student extends UserBaseEntity {
          * @param gender   student's gender
          */
         public StudentBuilder(String firstName, String lastName, String userName,
-                              String password, String email, String gender) {
+                              String password, String email, Gender gender) {
             super(firstName, lastName, userName, password, email, gender);
         }
 
@@ -181,11 +181,11 @@ public class Student extends UserBaseEntity {
         this.subjects = subjects;
     }
 
-    public Map<SubjectSchool, Integer> getEnrolledSubjects() {
-        return enrolledSubjects;
+    public Map<Course, Integer> getCourses() {
+        return Courses;
     }
 
-    public void setEnrolledSubjects(Map<SubjectSchool, Integer> enrolledSubjects) {
-        this.enrolledSubjects = enrolledSubjects;
+    public void setCourses(Map<Course, Integer> Courses) {
+        this.Courses = Courses;
     }
 }
