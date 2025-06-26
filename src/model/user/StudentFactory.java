@@ -1,4 +1,6 @@
-package model;
+package model.user;
+
+import model.constant.AcademicYear;
 
 /**
  * Factory class responsible for creating {@link Student} objects with academic year handling.

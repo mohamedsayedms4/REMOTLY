@@ -1,4 +1,7 @@
-package model;
+package model.user;
+
+import model.constant.AcademicYear;
+import model.constant.Role;
 
 /**
  * Factory class to create {@link UserBaseEntity} instances such as {@link Student} or {@link Teacher}
@@ -65,4 +68,6 @@ public class UserEntityFactory {
     public static UserBaseEntity createUser(UserBaseEntity.BaseBuilder<?> builder, Role role) {
         return createUser(builder, role, null);
     }
+
+
 }

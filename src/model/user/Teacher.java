@@ -1,4 +1,7 @@
-package model;
+package model.user;
+
+import model.constant.Gender;
+import model.subject.Course;
 
 import java.util.ArrayList;
 import java.util.List;

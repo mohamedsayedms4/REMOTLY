@@ -1,4 +1,4 @@
-package model;
+package model.constant;
 
 /**
  * Enum representing all academic years in the Egyptian school system.

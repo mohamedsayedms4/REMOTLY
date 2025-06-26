@@ -1,4 +1,9 @@
-package model;
+package model.user;
+
+import model.constant.AcademicYear;
+import model.constant.Gender;
+import model.constant.Subject;
+import model.subject.Course;
 
 import java.util.*;
 import java.util.stream.Collectors;

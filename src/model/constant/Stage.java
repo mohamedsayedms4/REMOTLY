@@ -1,4 +1,4 @@
-package model;
+package model.constant;
 
 /**
  * Enum representing the main educational stages in the Egyptian school system.

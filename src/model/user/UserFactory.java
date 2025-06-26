@@ -1,4 +1,4 @@
-package model;
+package model.user;
 
 /**
  * Interface representing a generic factory for creating {@link UserBaseEntity} objects.

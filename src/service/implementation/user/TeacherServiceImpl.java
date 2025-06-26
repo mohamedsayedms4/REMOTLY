@@ -1,12 +1,11 @@
-package service.implementation;
+package service.implementation.user;
 
-import model.Course;
-import model.Lesson;
-import model.Student;
-import model.Teacher;
-import service.TeacherService;
+import model.subject.Course;
+import model.subject.Lesson;
+import model.user.Student;
+import model.user.Teacher;
+import service.userServiceInterfaces.TeacherService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

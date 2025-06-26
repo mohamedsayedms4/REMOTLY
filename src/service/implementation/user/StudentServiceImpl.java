@@ -1,12 +1,16 @@
-package service.implementation;
+package service.implementation.user;
 
-import model.AcademicYear;
-import model.Course;
-import model.Student;
-import model.Subject;
-import service.StudentService;
+import model.*;
+import model.constant.AcademicYear;
+import model.constant.Subject;
+import model.subject.Course;
+import model.user.Student;
+import service.userServiceInterfaces.StudentService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of the StudentService interface.
@@ -17,11 +21,16 @@ import java.util.Map;
  */
 public class StudentServiceImpl implements StudentService {
 
+    private final Remotly remotly = Remotly.getInstance();
     private final Student student;
+    private final Map<Subject, List<Course>> subjectSchoolMap;
 
-    public StudentServiceImpl(Student student) {
+    public StudentServiceImpl(Student student, Map<Subject, List<Course>> subjectSchoolMap) {
         this.student = student;
+        this.subjectSchoolMap = subjectSchoolMap;
     }
+
+
 
     /**
      * Displays available subjects for the student's academic year.
@@ -119,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
             Map<Course, Integer> enrolledCourses = student.getCourses();
             if (enrolledCourses.containsKey(course)) {
                 enrolledCourses.remove(course);
-                course.unenrollStudent(student);
+//                course.(student);
                 System.out.println("✅ Unsubscribed from course: " + course.getName());
                 return 1;
             } else {
@@ -135,11 +144,67 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void showCourseDetails(Course course) {
         System.out.println("Course Details:");
-        System.out.println("id : "+ course.getId());
+        System.out.println("id : "+ course.getSchoolId());
         System.out.println("name : "+ course.getName());
         System.out.println("Teacher name : "+ course.getTeacherName());
-        System.out.println("Number of sessions : "+ course.getNumberOfSessions());
-        System.out.println("Hours : "+ course.getNumberOfHours());
+//        System.out.println("Number of sessions : "+ course.g());
+        System.out.println("Hours : "+ course.getTotalHours());
         System.out.println("lessons" + course.getLessons());
     }
+
+    @Override
+    public void showAvailableCoursesInSubjects(Student student, Subject subject) {
+        AcademicYear year = student.getAcademicYear();
+
+        if (!subject.isAvailableIn(year)) {
+            System.out.println("❌ Subject '" + subject.getArabicName() + "' is not available in student's academic year: " + year);
+            return;
+        }
+
+        List<Course> allCourses = Remotly.getInstance().getAllCourses();
+
+        List<Course> matchedCourses = allCourses.stream()
+                .filter(course -> course.getAcademicYear() == year)
+                .filter(course -> course.getSubject() == subject)
+                .collect(Collectors.toList());
+
+        System.out.println("\n📚 Available Courses for Subject: " + subject.getArabicName()
+                + " | Student: " + student.getFullName());
+
+        if (matchedCourses.isEmpty()) {
+            System.out.println("⚠️ No courses available for this subject.");
+        } else {
+            for (Course course : matchedCourses) {
+                System.out.println("  - " + course.getName() + " (by " + course.getTeacherName() + ")");
+            }
+        }
+    }
+
+    @Override
+    public void showAccountDetails(Student student) {
+        System.out.println("Account Details:");
+        System.out.println("fullName : "+ student.getFullName());
+        System.out.println("email : "+ student.getEmail());
+        System.out.println("userName : "+ student.getUserName());
+        System.out.println("password : "+ student.getPassword());
+        System.out.println("academicYear : "+ student.getAcademicYear());
+    }
+
+    @Override
+    public Course getCourseByNameAndSubject(String courseName, Subject subject) {
+        List<Course> courses = Remotly.getInstance().getSubjectSchoolMap().get(subject);
+        if (courses == null) return null;
+
+        return courses.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(courseName))
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    @Override
+    public List<Course> getAvailableCoursesForSubject(Student student, Subject subject) {
+        return subjectSchoolMap.getOrDefault(subject, new ArrayList<>());
+    }
+
 }

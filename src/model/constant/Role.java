@@ -1,4 +1,4 @@
-package model;
+package model.constant;
 
 /**
  * Enum representing user roles within the system.

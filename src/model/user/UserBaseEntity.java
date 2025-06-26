@@ -1,4 +1,7 @@
-package model;
+package model.user;
+
+import model.constant.Gender;
+import model.constant.Role;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

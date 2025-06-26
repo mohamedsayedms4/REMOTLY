@@ -1,10 +1,7 @@
-package service;
+package service.userServiceInterfaces;
 
-import model.Course;
-import model.Lesson;
-import model.Student;
-
-import java.util.ArrayList;
+import model.subject.Course;
+import model.subject.Lesson;
 
 public interface TeacherService {
 

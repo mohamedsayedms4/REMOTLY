@@ -1,7 +1,15 @@
 package model;
 
+import model.subject.Category;
+import model.subject.Course;
+import model.user.Student;
+import model.user.Teacher;
+import model.constant.Subject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Singleton class representing the core application container for Remotly platform.
@@ -16,6 +24,14 @@ public class Remotly {
 
     private final List<Student> students;
     private final List<Teacher> teachers;
+    private final List<Course> courses;
+    private final List<Category> Categories;
+    private Map<Subject, List<Course>> subjectSchoolMap = new HashMap<>();
+
+    public Map<Subject, List<Course>> getSubjectSchoolMap() {
+        return subjectSchoolMap;
+    }
+
 
     // Singleton instance
     private static Remotly instance;
@@ -24,6 +40,8 @@ public class Remotly {
     private Remotly() {
         students = new ArrayList<>();
         teachers = new ArrayList<>();
+        courses = new ArrayList<>();
+        Categories = new ArrayList<>();
     }
 
     /**
@@ -41,6 +59,34 @@ public class Remotly {
 
     public String getName() {
         return name;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+    public void addCourse(Course course) {
+        this.courses.add(course);
+    }
+
+    public void addStudents(Student student) {
+        this.students.add(student);
+    }
+
+    public void addTeachers(Teacher teacher) {
+        this.teachers.add(teacher);
+    }
+
+    public void addCategories(Category category) {
+        this.Categories.add(category);
+    }
+
+
+    public List<Category> getCategories() {
+        return Categories;
+    }
+
+    public List<Course> getAllCourses() {
+        return this.courses; // لازم تكون عندك List<Course> courses داخل Remotly
     }
 
     public List<Student> getStudents() {
@@ -79,4 +125,9 @@ public class Remotly {
     public void addTeacher(Teacher teacher) {
         teachers.add(teacher);
     }
+
+
+
+
+
 }
